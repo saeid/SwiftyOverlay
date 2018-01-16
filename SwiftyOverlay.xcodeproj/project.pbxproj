@@ -8,12 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		36FD596F200E6C5100374CA7 /* SwiftyOverlay.h in Headers */ = {isa = PBXBuildFile; fileRef = 36FD596D200E6C5100374CA7 /* SwiftyOverlay.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		36FD5977200E6C5900374CA7 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FD5975200E6C5900374CA7 /* Utilities.swift */; };
+		36FD5978200E6C5900374CA7 /* GDOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FD5976200E6C5900374CA7 /* GDOverlay.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		36FD596A200E6C5100374CA7 /* SwiftyOverlay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyOverlay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		36FD596D200E6C5100374CA7 /* SwiftyOverlay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyOverlay.h; sourceTree = "<group>"; };
 		36FD596E200E6C5100374CA7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		36FD5975200E6C5900374CA7 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		36FD5976200E6C5900374CA7 /* GDOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDOverlay.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +50,8 @@
 		36FD596C200E6C5100374CA7 /* SwiftyOverlay */ = {
 			isa = PBXGroup;
 			children = (
+				36FD5976200E6C5900374CA7 /* GDOverlay.swift */,
+				36FD5975200E6C5900374CA7 /* Utilities.swift */,
 				36FD596D200E6C5100374CA7 /* SwiftyOverlay.h */,
 				36FD596E200E6C5100374CA7 /* Info.plist */,
 			);
@@ -95,6 +101,7 @@
 				TargetAttributes = {
 					36FD5969200E6C5100374CA7 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -131,6 +138,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36FD5977200E6C5900374CA7 /* Utilities.swift in Sources */,
+				36FD5978200E6C5900374CA7 /* GDOverlay.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +262,7 @@
 		36FD5973200E6C5100374CA7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -262,10 +272,12 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = SwiftyOverlay/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.saeidbsn.SwiftyOverlay;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -274,6 +286,7 @@
 		36FD5974200E6C5100374CA7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -283,6 +296,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = SwiftyOverlay/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.saeidbsn.SwiftyOverlay;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";

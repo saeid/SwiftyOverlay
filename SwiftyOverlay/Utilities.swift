@@ -35,11 +35,11 @@ public enum LineType{
 
 // MARK: - helpers
 extension GDOverlay{
-    var topView: UIView{
-        if let appDelegate = UIApplication.shared.delegate{
-            return appDelegate.window!!
+    var topView: UIView?{
+        if let keywindow = UIApplication.shared.keyWindow{
+            return keywindow
         }
-        return UIView()
+        return nil
     }
     
     func calculateNavHeight(_ vc: UIViewController) -> CGFloat{

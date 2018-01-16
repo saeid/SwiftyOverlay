@@ -140,7 +140,9 @@ public final class GDOverlay: UIView {
     
     public init(){
         super.init(frame: CGRect.zero)
-        self.frame = self.topView.frame
+        if let topView = topView{
+            self.frame = topView.frame
+        }
         self.backgroundColor = UIColor.clear
     }
     
@@ -154,11 +156,15 @@ public final class GDOverlay: UIView {
     }
     
     private func initViews(_ circle: Bool){
+        guard let topView = topView else{
+            return
+        }
+        
         let targetCenter: CGPoint = calculateCenter()
         self.createBackgroundView()
         self.createContainerView()
         
-        self.topView.addSubview(self)
+        topView.addSubview(self)
         setupContainerViewConstraints(to: targetCenter)
         
         layoutIfNeeded()
@@ -209,7 +215,7 @@ public final class GDOverlay: UIView {
         descLabel.text = desc
         initViews(isCircle)
     }
-        
+    
     //MARK: - Background View
     fileprivate var backgroundView: UIView!
     private func createBackgroundView(){
@@ -256,6 +262,10 @@ public final class GDOverlay: UIView {
     //MARK: - Container View
     fileprivate var contView: UIView!
     private func createContainerView(){
+        guard let topView = topView else{
+            return
+        }
+        
         self.descLabel.font = _labelFont
         self.descLabel.textColor = _labelColor
         
@@ -308,6 +318,9 @@ extension GDOverlay{
     }
     
     fileprivate func setupContainerViewConstraints(to point: CGPoint){
+        guard let topView = topView else{
+            return
+        }
         let section = setSection(point)
         let consts = setSectionPoint(section)
         
@@ -339,13 +352,13 @@ extension GDOverlay{
             if dir == .left{
                 startPoint = CGPoint(x: contView.frame.midX - 20, y: contView.frame.minY - 10)
                 endPoint = CGPoint(x: helpView.frame.midX, y: helpView.frame.maxY + offsetTop)
-
+                
                 let cp = calcCenterPoint(startPoint, end: endPoint)
                 controlPoint = CGPoint(x: cp.x - 50, y: cp.y)
             }else{
                 startPoint = CGPoint(x: contView.frame.midX, y: contView.frame.minY - 20)
                 endPoint = CGPoint(x: helpView.frame.midX + 35, y: helpView.frame.maxY + offsetTop)
-
+                
                 let cp = calcCenterPoint(startPoint, end: endPoint)
                 controlPoint = CGPoint(x: cp.x + 50, y: cp.y)
             }
@@ -424,6 +437,9 @@ extension GDOverlay{
     }
     
     fileprivate func setSection(_ targetPoint: CGPoint) -> Int{
+        guard let topView = topView else{
+            return 0
+        }
         let centerPoint: CGPoint = topView.center
         
         if targetPoint == centerPoint{

@@ -12,7 +12,7 @@ protocol SkipOverlayDelegate: class{
     func onSkipSignal()
 }
 
-class GDOverlay: UIView {
+public final class GDOverlay: UIView {
     //MARK: - Attributes
     fileprivate var _backColor: UIColor = UIColor.black.withAlphaComponent(0.8)
     public var backColor: UIColor{
@@ -138,13 +138,13 @@ class GDOverlay: UIView {
     weak var delegate: SkipOverlayDelegate? = nil
     fileprivate var helpView: UIView!
     
-    init(){
+    public init(){
         super.init(frame: CGRect.zero)
         self.frame = self.topView.frame
         self.backgroundColor = UIColor.clear
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

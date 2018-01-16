@@ -26,7 +26,7 @@ enum LineDirection: UInt32{
     }
 }
 
-enum LineType{
+public enum LineType{
     case line_arrow
     case line_bubble
     case dash_arrow

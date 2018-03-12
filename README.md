@@ -1,4 +1,4 @@
-# SwiftyHelpOverlay
+# SwiftyOverlay
 App Intro / instruction component to show data over app UI at run time and real-time!
 
 Easy to use, Animated and customizable setup.
@@ -57,7 +57,7 @@ end
         o.drawOverlay(to: <#T##UIView#>, desc: <#T##String#>, isCircle: <#T##Bool#>)
         
         /// TabBar Items
-        // Comming soon
+        o.drawOverlay(to: <#T##UITabBar#>, item: <#T##Int#>, desc: <#T##String#>)
     }
 
     // create an instance of GDOverlay()

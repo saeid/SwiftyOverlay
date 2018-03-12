@@ -11,7 +11,7 @@ s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.0' }
 s.platform     = :ios
 s.ios.deployment_target  = '9.0'
 s.requires_arc = true
-
+s.swift_version = '4.0'
 s.source_files = 'SwiftyOverlay/**/*'
 s.frameworks = 'UIKit'
 

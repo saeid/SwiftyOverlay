@@ -34,7 +34,7 @@ target '<Your Target Name>' do
 pod 'SwiftyOverlay'
 end
 ```
-
+`pod update` then `pod install`
 
 
 ## How to use

@@ -1,9 +1,9 @@
 # SwiftyOverlay
 App Intro / instruction component to show data over app UI at run time and real-time!
-
 Easy to use, Animated and customizable setup.
-
 Show animated lines to the desire object with related details.
+
+Supported Components are : `UITabbarItem`s, `TableView`s, `TabbarView`s, all `UIView` controls and components!
 
 Demo project included for details 
 

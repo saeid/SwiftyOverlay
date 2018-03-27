@@ -29,7 +29,6 @@ enum LineDirection: UInt32{
 public enum LineType{
     case line_arrow
     case line_bubble
-    case dash_arrow
     case dash_bubble
 }
 
@@ -50,12 +49,26 @@ extension GDOverlay{
     }
 }
 
-
 extension CGRect {
     var center: CGPoint {
-        get {
-            return CGPoint(x: midX, y: midY)
-        }
+        return CGPoint(x: midX, y: midY)
     }
 }
 
+extension UIBezierPath{
+    func addArrowForm(point: CGPoint, controlPoint: CGPoint, width: CGFloat, height: CGFloat){
+        let angle: CGFloat = CGFloat(atan2f(Float(point.y - controlPoint.y), Float(point.x - controlPoint.x)))
+        let angleAdjustment: CGFloat = CGFloat(atan2f(Float(width), Float(-height)))
+        let distance: CGFloat = CGFloat(hypotf(Float(width), Float(height)))
+        
+        move(to: point)
+        addLine(to: calculatePointFromPoint(point: point, angle: angle + angleAdjustment, distance: distance))
+        addLine(to: point)
+        addLine(to: calculatePointFromPoint(point: point, angle: angle - angleAdjustment, distance: distance))
+        addLine(to: point)
+    }
+    
+    private func calculatePointFromPoint(point: CGPoint, angle: CGFloat, distance: CGFloat) -> CGPoint{
+        return CGPoint(x: CGFloat(Float(point.x) + cosf(Float(angle)) * Float(distance)), y: CGFloat(Float(point.y) + sinf(Float(angle)) * Float(distance)))
+    }
+}

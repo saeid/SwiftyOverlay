@@ -13,9 +13,9 @@ Demo project included for details
 
 
 ## Requirements
-- Xcode 8+
-- Swift 3+
-- iOS 8+
+- Xcode 9+
+- Swift 4+
+- iOS 9+
 
 
 ## Installation
@@ -27,7 +27,7 @@ Install using Cocoapods
 ------
 ```
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '8.0'
+platform :ios, '9.0'
 use_frameworks!
 
 target '<Your Target Name>' do
@@ -40,7 +40,7 @@ end
 ## How to use
 
 ```swift
-    // Include SkipOverlayDelegate protocol to ViewController 
+    // Include SkipOverlayDelegate protocol to ViewController
 
     func onSkipSignal(){
         // Skip each item here
@@ -80,9 +80,10 @@ end
         o.labelFont = UIFont.systemFont(ofSize: 12)
         o.labelColor = UIColor.green
         
-        // Currently only LineType.line_bubble and LineType.dash_bubble
+        // Line type
         o.lineType = LineType.line_bubble
         o.lineType = LineType.dash_bubble
+        o.lineType = LineType.line_arrow
         
         // If view controller has navigation bar, use it
         // to calculate the correct height

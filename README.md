@@ -85,10 +85,6 @@ end
         o.lineType = LineType.dash_bubble
         o.lineType = LineType.line_arrow
         
-        // If view controller has navigation bar, use it
-        // to calculate the correct height
-        o.navHeight = o.calculateNavHeight(self)
-
         // Always set the delegate for SkipOverlayDelegate
         // for onSkipSignal() function call
         o.delegate = self

@@ -5,7 +5,7 @@ Show animated lines to the desire object with related details.
 
 Supported Components are : `UITabbarItem`s, `TableView`s, `TabbarView`s, all `UIView` controls and components!
 
-Demo project included for details 
+For demo project check [this repo](https://github.com/saeid/SwiftyGuideOverlay)
 
 
 ![2](https://cloud.githubusercontent.com/assets/9967486/21859393/a6fbe282-d841-11e6-9271-e0e9e9c6bb6c.gif)

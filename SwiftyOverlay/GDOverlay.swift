@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol SkipOverlayDelegate: class{
+public protocol SkipOverlayDelegate: class{
     func onSkipSignal()
 }
 
@@ -188,7 +188,7 @@ public final class GDOverlay: UIView {
         var targetRect: CGRect? = nil
         var barView: UIView? = nil
         
-        var frames = tabbarView.subviews.flatMap { (view: UIView) -> CGRect? in
+        var frames = tabbarView.subviews.compactMap { (view: UIView) -> CGRect? in
             if let view = view as? UIControl {
                 barView = view
                 return view.frame

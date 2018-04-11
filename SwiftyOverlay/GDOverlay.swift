@@ -135,7 +135,7 @@ public final class GDOverlay: UIView {
     }
     
     //MARK: - Self Init
-    weak var delegate: SkipOverlayDelegate? = nil
+    public weak var delegate: SkipOverlayDelegate? = nil
     fileprivate var helpView: UIView!
     
     public init(){

@@ -58,6 +58,10 @@ end
         
         /// TabBar Items
         o.drawOverlay(to: <#T##UITabBar#>, item: <#T##Int#>, desc: <#T##String#>)
+        
+        /// For StackViews, Eg. first view of stackview
+        let targetView = stackView.arrangedSubviews[0]
+        o.drawOverlay(to: targetView, desc: <#T##String#>, isCircle: <#T##Bool#>)
     }
 
     // create an instance of GDOverlay()

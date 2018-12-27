@@ -1,9 +1,8 @@
 # SwiftyOverlay
-App Intro / instruction component to show data over app UI at run time and real-time!
-Easy to use, Animated and customizable setup.
-Show animated lines to the desire object with related details.
+App Intro / Instruction component to show data over app UI at run time!  
+Easy to use, Animated and Customizable.
 
-Supported Components are : `UITabbarItem`s, `TableView`s, `TabbarView`s, all `UIView` controls and components!
+Supported Components are : `UITabbarItem`, `TableView`, `TabbarView`, all `UIView` controls and components!
 
 For demo project check [this repo](https://github.com/saeid/SwiftyGuideOverlay)
 
@@ -19,12 +18,9 @@ For demo project check [this repo](https://github.com/saeid/SwiftyGuideOverlay)
 
 
 ## Installation
-Install manually
-------
-Drag `Source` folder to your project and use!
 
-Install using Cocoapods
-------
+## Cocoapods
+
 ```
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '9.0'
@@ -34,71 +30,64 @@ target '<Your Target Name>' do
 pod 'SwiftyOverlay'
 end
 ```
-`pod update` then `pod install`
+    pod update 
+    pod install
 
+## Usage
 
-## How to use
-
+Inherit `SkipOverlayDelegate`
 ```swift
-    // Include SkipOverlayDelegate protocol to ViewController
-
-    func onSkipSignal(){
-        // Skip each item here
-        // Check sample project for more info on this
-        /// NEW: now with better support for barbutton items - support tableview rows
-        
-        /// TableView
-        o.drawOverlay(to: <#T##UITableView#>, section: <#T##Int#>, row: <#T##Int#>, desc: <#T##String#>)
-        
-        /// UIBarButtonItem
-        o.drawOverlay(to: <#T##UIBarButtonItem#>, desc: <#T##String#>)
-
-        /// Any other views
-        o.drawOverlay(to: <#T##UIView#>, desc: <#T##String#>, isCircle: <#T##Bool#>)
-        
-        /// TabBar Items
-        o.drawOverlay(to: <#T##UITabBar#>, item: <#T##Int#>, desc: <#T##String#>)
-        
-        /// For StackViews, Eg. first view of stackview
-        let targetView = stackView.arrangedSubviews[0]
-        o.drawOverlay(to: targetView, desc: <#T##String#>, isCircle: <#T##Bool#>)
-    }
-
-    // create an instance of GDOverlay()
-    var o = GDOverlay()
-    
-    // do customizations in viewDidAppear()
-
-    override func viewDidAppear(_ animated: Bool){
-        // Appereance customizations
-        o.arrowColor = UIColor.red
-        o.showBorder = false
-        o.boxBackColor = UIColor.clear
-
-        o.highlightView = true
-        o.arrowWidth = 2.0
-        o.backColor = UIColor.blue
-        o.boxBorderColor = UIColor.black
-        o.headColor = UIColor.white
-        o.headRadius = 6
-        o.labelFont = UIFont.systemFont(ofSize: 12)
-        o.labelColor = UIColor.green
-        
-        // Line type
-        o.lineType = LineType.line_bubble
-        o.lineType = LineType.dash_bubble
-        o.lineType = LineType.line_arrow
-        
-        // Always set the delegate for SkipOverlayDelegate
-        // for onSkipSignal() function call
-        o.delegate = self
-        
-        self.onSkipSignal()
-    }
+class ViewController: UIViewController, SkipOverlayDelegate
 ```
 
+Create an instance of GDOverlay
+```swift
+var overlay: GDOverlay = GDOverlay()
+```
+
+Set delegate
+```swift
+overlay.delegate = self
+```
+
+Set properties
+```swift 
+overlay.arrowColor = UIColor.red
+overlay.arrowWidth = 2.0
+overlay.lineType = LineType.line_bubble
+
+...
+
+// Full properties list can be found on sample project
+
+```
+
+Now call Overlay View Skip function to show!
+```swift
+onSkipSignal()
+```
+
+Override `onSkipSignal` function
+```swift
+func onSkipSignal(){
+    /// TableView
+    overlay.drawOverlay(to: self.tableView, section: 0, row: 0, desc: "Description ...")
+    
+    /// UIBarButtonItem
+    overlay.drawOverlay(to: barButtonItem, desc: "Description ...")
+
+    /// Any other views
+    overlay.drawOverlay(to: self.someView, desc: "Description ...", isCircle: true)
+    
+    /// TabBar Items
+    overlay.drawOverlay(to: self.tabbarView, item: 0, desc: "Description ...")
+    
+    /// For StackViews, Eg. first view of stackview
+    let targetView = stackView.arrangedSubviews[0]
+    o.drawOverlay(to: targetView, desc: "Description ...", isCircle: true)
+}
+```
 
 ## Licence
-
 SwiftyHelpOverlay is available under the MIT license. See the [LICENSE.txt](https://github.com/SaeidBsn/SwiftyGuideOverlay/blob/master/Licence.txt) file for more info.
 

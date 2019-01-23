@@ -154,20 +154,30 @@ public final class GDOverlay: UIView {
         return targetRect.center
     }
     
-    private func initViews(_ circle: Bool){
-        let targetCenter: CGPoint = calculateCenter()
-        self.createBackgroundView()
-        self.createContainerView()
-        
-        self.topView?.addSubview(self)
-        setupContainerViewConstraints(to: targetCenter)
-        
-        layoutIfNeeded()
-        if _highlightView{
-            self.unmaskView(targetCenter, isCircle: circle)
+    private func initViews(_ circle: Bool, textOnly: Bool = false){
+        if !textOnly{
+            let targetCenter: CGPoint = calculateCenter()
+            self.createBackgroundView()
+            self.createContainerView()
+            
+            self.topView?.addSubview(self)
+            setupContainerViewConstraints(to: targetCenter)
+            
+            layoutIfNeeded()
+            if _highlightView{
+                self.unmaskView(targetCenter, isCircle: circle)
+            }
+            
+            self.createTargetView(center: targetCenter)
+        }else{
+            self.createBackgroundView()
+            self.createContainerView()
+            
+            self.topView?.addSubview(self)
+            setupContainerViewConstraints()
+            
+            layoutIfNeeded()
         }
-        
-        self.createTargetView(center: targetCenter)
     }
     
     public func drawOverlay(to barButtonItem: UIBarButtonItem, desc: String){
@@ -229,7 +239,13 @@ public final class GDOverlay: UIView {
         initViews(false)
     }
     
-    public func drawOverlay(to view: UIView, desc: String, isCircle: Bool = true){
+    
+    public func drawOverlay(desc: NSMutableAttributedString){
+        initViews(false, textOnly: true)
+        descLabel.attributedText = desc
+    }
+    
+    public func drawOverlay(to view: UIView, desc: NSMutableAttributedString, isCircle: Bool = true){
         let windowRect = view.convert(view.bounds , to: topView)
         let v = UIView()
         v.frame = windowRect
@@ -237,8 +253,8 @@ public final class GDOverlay: UIView {
         
         helpView = v
         
-        descLabel.text = desc
         initViews(isCircle)
+        descLabel.attributedText = desc
     }
     
     //MARK: - Background View
@@ -271,7 +287,7 @@ public final class GDOverlay: UIView {
     //MARK: - Description Label
     fileprivate var descLabel: UILabel = {
         let lbl = UILabel()
-        lbl.numberOfLines = 3
+        lbl.numberOfLines = 0
         lbl.lineBreakMode = .byWordWrapping
         lbl.sizeToFit()
         lbl.translatesAutoresizingMaskIntoConstraints = false
@@ -336,6 +352,20 @@ extension GDOverlay{
         descLabel.widthAnchor.constraint(equalToConstant: contView.frame.width - 10).isActive = true
     }
     
+    fileprivate func setupContainerViewConstraints(){
+        let centerX = contView.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0)
+        centerX.isActive = true
+        let centerY = contView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 0)
+        centerY.isActive = true
+        
+        let right = contView.rightAnchor.constraint(equalTo: rightAnchor, constant: -16)
+        right.isActive = true
+        let left = contView.leftAnchor.constraint(equalTo: leftAnchor, constant: 16)
+        left.isActive = true
+        
+        topView?.addConstraints([centerY, centerX, right, left])
+    }
+    
     fileprivate func setupContainerViewConstraints(to point: CGPoint){
         let section = setSection(point)
         let consts = setSectionPoint(section)
@@ -359,7 +389,7 @@ extension GDOverlay{
         var endPoint: CGPoint!
         var controlPoint: CGPoint!
         
-        let dir = LineDirection.randomDir()
+        let dir = LineDirection.randomDir
         let offsetTop: CGFloat = highlightView ? 20.0 : 0.0
         let offsetBottom: CGFloat = highlightView ? -20.0 : 0.0
         
@@ -408,8 +438,8 @@ extension GDOverlay{
             }
         case 4:
             if dir == .left{
-                startPoint = CGPoint(x: contView.frame.midX + contView.frame.midX / 4, y: contView.frame.maxY + 20)
-                endPoint = CGPoint(x: helpView.frame.midX + 5, y: helpView.frame.minY + offsetBottom)
+                startPoint = CGPoint(x: contView.frame.maxX - 50, y: contView.frame.maxY + 8)
+                endPoint = CGPoint(x: helpView.frame.maxX - 50, y: helpView.frame.minY + offsetBottom)
                 
                 let cp = calcCenterPoint(startPoint, end: endPoint)
                 controlPoint = CGPoint(x: cp.x + 50, y: cp.y)
@@ -462,7 +492,7 @@ extension GDOverlay{
         }else if targetPoint.x > centerPoint.x && targetPoint.y > centerPoint.y{
             return 4
         }else{
-            return 0
+            return 4
         }
     }
     

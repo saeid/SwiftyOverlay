@@ -20,9 +20,9 @@ enum LineDirection: UInt32{
         return maxValue
     }()
     
-    static func randomDir() -> LineDirection {
+    static var randomDir: LineDirection {
         let rand = arc4random_uniform(2)
-        return LineDirection(rawValue: rand)!
+        return LineDirection(rawValue: rand) ?? .left
     }
 }
 

@@ -70,6 +70,9 @@ onSkipSignal()
 Override `onSkipSignal` function
 ```swift
 func onSkipSignal(){
+    /// Add an attributed string over the screen
+    overlay.drawOverlay(desc: NSMutableAttributedString)
+
     /// TableView
     overlay.drawOverlay(to: self.tableView, section: 0, row: 0, desc: "Description ...")
     

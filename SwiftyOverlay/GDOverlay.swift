@@ -64,26 +64,6 @@ public final class GDOverlay: UIView {
         }
     }
     
-    fileprivate var _labelFont: UIFont = UIFont.boldSystemFont(ofSize: 14)
-    public var labelFont: UIFont{
-        get{
-            return _labelFont
-        }
-        set{
-            _labelFont = newValue
-        }
-    }
-    
-    fileprivate var _labelColor: UIColor = UIColor.white
-    public var labelColor: UIColor{
-        get{
-            return _labelColor
-        }
-        set{
-            _labelColor = newValue
-        }
-    }
-    
     fileprivate var _arrowColor: UIColor = UIColor.white
     public var arrowColor: UIColor{
         get{
@@ -180,7 +160,7 @@ public final class GDOverlay: UIView {
         }
     }
     
-    public func drawOverlay(to barButtonItem: UIBarButtonItem, desc: String){
+    public func drawOverlay(to barButtonItem: UIBarButtonItem, desc: NSAttributedString){
         if let barView = barButtonItem.value(forKey: "view") as? UIView {
             let barFrame = barView.frame
             let windowRect = barView.convert(barFrame, to: topView)
@@ -190,11 +170,11 @@ public final class GDOverlay: UIView {
             helpView = v
         }
         
-        descLabel.text = desc
+        descLabel.attributedText = desc
         initViews(true)
     }
     
-    public func drawOverlay(to tabbarView: UITabBar, item: Int, desc: String){
+    public func drawOverlay(to tabbarView: UITabBar, item: Int, desc: NSAttributedString){
         var targetRect: CGRect? = nil
         var barView: UIView? = nil
         
@@ -220,11 +200,11 @@ public final class GDOverlay: UIView {
         
         helpView = v
         
-        descLabel.text = desc
+        descLabel.attributedText = desc
         initViews(false)
     }
     
-    public func drawOverlay(to tableView: UITableView, section: Int, row: Int, desc: String){
+    public func drawOverlay(to tableView: UITableView, section: Int, row: Int, desc: NSAttributedString){
         let indexPath: IndexPath = IndexPath(row: row, section: section)
         let tableRect = tableView.rectForRow(at: indexPath)
         let windowRect = tableView.convert(tableRect, to: topView)
@@ -235,17 +215,17 @@ public final class GDOverlay: UIView {
         
         helpView = v
         
-        descLabel.text = desc
+        descLabel.attributedText = desc
         initViews(false)
     }
     
     
-    public func drawOverlay(desc: NSMutableAttributedString){
+    public func drawOverlay(desc: NSAttributedString){
         initViews(false, textOnly: true)
         descLabel.attributedText = desc
     }
     
-    public func drawOverlay(to view: UIView, desc: NSMutableAttributedString, isCircle: Bool = true){
+    public func drawOverlay(to view: UIControl, desc: NSAttributedString, isCircle: Bool = true){
         let windowRect = view.convert(view.bounds , to: topView)
         let v = UIView()
         v.frame = windowRect
@@ -304,10 +284,7 @@ public final class GDOverlay: UIView {
     fileprivate var contView: UIView!
     private func createContainerView(){
         guard let topView = topView else { return }
-        
-        self.descLabel.font = _labelFont
-        self.descLabel.textColor = _labelColor
-        
+                
         contView = UIView()
         contView.frame = CGRect(x: 0, y: 0, width: topView.frame.width - 60, height: 50)
         contView.backgroundColor = _boxBackColor
@@ -335,7 +312,7 @@ public final class GDOverlay: UIView {
         
         maskLayer.backgroundColor = UIColor.black.cgColor
         maskLayer.path = path
-        maskLayer.fillRule = kCAFillRuleEvenOdd
+        maskLayer.fillRule = CAShapeLayerFillRule.evenOdd
         
         backgroundView.layer.mask = maskLayer
         backgroundView.clipsToBounds = false
@@ -349,7 +326,6 @@ extension GDOverlay{
         descLabel.rightAnchor.constraint(equalTo: contView.rightAnchor, constant: -10.0).isActive = true
         descLabel.topAnchor.constraint(equalTo: contView.topAnchor, constant: 10.0).isActive = true
         descLabel.bottomAnchor.constraint(equalTo: contView.bottomAnchor, constant: -10.0).isActive = true
-        descLabel.widthAnchor.constraint(equalToConstant: contView.frame.width - 10).isActive = true
     }
     
     fileprivate func setupContainerViewConstraints(){
@@ -411,7 +387,7 @@ extension GDOverlay{
         case 2:
             if dir == .left{
                 startPoint = CGPoint(x: contView.frame.midX + contView.frame.midX / 4, y: contView.frame.minY - 10)
-                endPoint = CGPoint(x: helpView.frame.minX - 25, y: helpView.frame.maxY + offsetTop)
+                endPoint = CGPoint(x: helpView.frame.minX + 5, y: helpView.frame.maxY + offsetTop)
                 
                 let cp = calcCenterPoint(startPoint, end: endPoint)
                 controlPoint = CGPoint(x: cp.x - 50, y: cp.y)
@@ -440,12 +416,12 @@ extension GDOverlay{
             if dir == .left{
                 startPoint = CGPoint(x: contView.frame.maxX - 50, y: contView.frame.maxY + 8)
                 endPoint = CGPoint(x: helpView.frame.maxX - 50, y: helpView.frame.minY + offsetBottom)
-                
+
                 let cp = calcCenterPoint(startPoint, end: endPoint)
                 controlPoint = CGPoint(x: cp.x + 50, y: cp.y)
             }else{
                 startPoint = CGPoint(x: contView.frame.midX, y: contView.frame.maxY + 10)
-                endPoint = CGPoint(x: helpView.frame.minX - 5, y: helpView.frame.minY + offsetBottom)
+                endPoint = CGPoint(x: helpView.frame.midX - 25, y: helpView.frame.minY + offsetBottom)
                 
                 let cp = calcCenterPoint(startPoint, end: endPoint)
                 controlPoint = CGPoint(x: cp.x - 50, y: cp.y)
@@ -507,14 +483,24 @@ extension GDOverlay{
             let y = contView.topAnchor.constraint(equalTo: helpView.bottomAnchor, constant: dynamicSpace)
             y.isActive = true
             
-            return [x, y]
+            let right = contView.rightAnchor.constraint(equalTo: rightAnchor, constant: -16)
+            right.isActive = true
+            let left = contView.leftAnchor.constraint(equalTo: leftAnchor, constant: 16)
+            left.isActive = true
+
+            return [x, y, left, right]
         case 3, 4:
             let x = contView.centerXAnchor.constraint(equalTo: topView.centerXAnchor, constant: 0.0)
             x.isActive = true
             let y = contView.bottomAnchor.constraint(equalTo: helpView.topAnchor, constant: -dynamicSpace)
             y.isActive = true
             
-            return [x, y]
+            let right = contView.rightAnchor.constraint(equalTo: rightAnchor, constant: -16)
+            right.isActive = true
+            let left = contView.leftAnchor.constraint(equalTo: leftAnchor, constant: 16)
+            left.isActive = true
+
+            return [x, y, left, right]
         default:
             return []
         }
@@ -528,8 +514,8 @@ extension GDOverlay{
         shapeLayer.fillColor = nil
         shapeLayer.strokeColor = _arrowColor.cgColor
         shapeLayer.lineWidth = _arrowWidth
-        shapeLayer.lineJoin = kCALineCapRound
-        shapeLayer.lineCap = kCALineCapRound
+        shapeLayer.lineJoin = CAShapeLayerLineJoin.round
+        shapeLayer.lineCap = CAShapeLayerLineCap.round
         
         let path = UIBezierPath()
         path.addArrowForm(point: endPoint, controlPoint: controlPoint, width: 5, height: 10)
@@ -549,8 +535,8 @@ extension GDOverlay{
         shape.strokeColor = _arrowColor.cgColor
         shape.fillColor = nil
         shape.lineWidth = _arrowWidth
-        shape.lineCap = kCALineCapRound
-        shape.lineJoin = kCALineJoinMiter
+        shape.lineCap = CAShapeLayerLineCap.round
+        shape.lineJoin = CAShapeLayerLineJoin.miter
         shape.strokeStart = 0.0
         shape.strokeEnd = 0.0
         
@@ -572,7 +558,7 @@ extension GDOverlay{
         arrowAnim.toValue = 1.0
         arrowAnim.duration = 0.5
         arrowAnim.autoreverses = false
-        arrowAnim.fillMode = kCAFillModeForwards
+        arrowAnim.fillMode = CAMediaTimingFillMode.forwards
         arrowAnim.isRemovedOnCompletion = false
         
         shape1.add(arrowAnim, forKey: nil)

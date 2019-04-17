@@ -459,7 +459,7 @@ extension GDOverlay{
         let centerPoint: CGPoint = topView.center
         if targetPoint == centerPoint{
             return 0
-        }else if targetPoint.x < centerPoint.x && targetPoint.y < centerPoint.y{
+        }else if targetPoint.x <= centerPoint.x && targetPoint.y < centerPoint.y{
             return 1
         }else if targetPoint.x < centerPoint.x && targetPoint.y > centerPoint.y{
             return 3
@@ -468,7 +468,7 @@ extension GDOverlay{
         }else if targetPoint.x > centerPoint.x && targetPoint.y > centerPoint.y{
             return 4
         }else{
-            return 4
+            return 1
         }
     }
     

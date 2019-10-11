@@ -175,24 +175,15 @@ public final class GDOverlay: UIView {
     }
     
     public func drawOverlay(to tabbarView: UITabBar, item: Int, desc: NSAttributedString){
-        var targetRect: CGRect? = nil
-        var barView: UIView? = nil
+        var vs = tabbarView.subviews.filter({ $0.isUserInteractionEnabled })
+        vs = vs.sorted(by: { $0.frame.minX < $1.frame.minX })
         
-        var frames = tabbarView.subviews.compactMap { (view: UIView) -> CGRect? in
-            if let view = view as? UIControl {
-                barView = view
-                return view.frame
-            }
-            return nil
+        var windowRect = vs[item].convert(vs[0].frame, to: topView)
+        
+        if UIDevice.current.userInterfaceIdiom == .pad{
+            windowRect.origin.x = vs[item].frame.minX
+            windowRect.size.width = vs[item].frame.width
         }
-        frames.sort { $0.origin.x < $1.origin.x }
-        if frames.count > item {
-            targetRect = frames[item]
-        }else{
-            targetRect = frames.last ?? CGRect.zero
-        }
-        guard let rect = targetRect, let barview = barView else { return }
-        let windowRect = barview.convert(rect, to: topView)
         
         let v = UIView()
         v.frame = windowRect

@@ -19,6 +19,12 @@ For demo project check [this repo](https://github.com/saeid/SwiftyGuideOverlay)
 
 ## Installation
 
+## Swift Package Manager
+
+```swift
+.package(url: "https://github.com/saeid/SwiftyOverlay.git", from: "1.1.14")
+```
+
 ## Cocoapods
 
 ```

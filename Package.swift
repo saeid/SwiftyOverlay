@@ -7,7 +7,7 @@ let package = Package(
     name: "SwiftyOverlay",
     products: [
         .library(
-            name: "Sources/SSwiftyOverlay",
+            name: "Sources/SwiftyOverlay",
             targets: ["SwiftyOverlay"]),
     ],
     dependencies: [],

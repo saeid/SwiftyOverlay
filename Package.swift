@@ -5,11 +5,6 @@ import PackageDescription
 
 let package = Package(
     name: "SwiftyOverlay",
-    products: [
-        .library(
-            name: "SwiftyOverlay",
-            targets: ["SwiftyOverlay"]),
-    ],
     dependencies: [],
     targets: [
         .target(

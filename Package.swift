@@ -7,13 +7,13 @@ let package = Package(
     name: "SwiftyOverlay",
     products: [
         .library(
-            name: "SwiftyOverlay",
+            name: "Sources/SSwiftyOverlay",
             targets: ["SwiftyOverlay"]),
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "Sources/SwiftyOverlay",
+            name: "SwiftyOverlay",
             dependencies: []),
         .testTarget(
             name: "SwiftyOverlayTests",

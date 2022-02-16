@@ -457,7 +457,7 @@ extension GDOverlay{
             return 3
         } else if targetPoint.x > centerPoint.x && targetPoint.y < centerPoint.y {
             return 2
-        } else if targetPoint.x > centerPoint.x && targetPoint.y > centerPoint.y {
+        } else if targetPoint.x >= centerPoint.x && targetPoint.y > centerPoint.y {
             return 4
         } else {
             return 1
